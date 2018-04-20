@@ -3,44 +3,52 @@ using UnityEngine;
 using UnityEditor;
 
 
-[AddComponentMenu("Modifiers/FFD/Manipulate")]
-public class Manipulate : MegaFFD
+public class Manipulate : MonoBehaviour
 {
     //射线检测用
     public Camera ca;
     private Ray ra;
     private RaycastHit hit;
 
-
+    public Block body;
+    public Block head;
+    public Block lLeg;
+    public Block rLeg;
+    public Block lArm;
+    public Block rArm;
 
 
     //拖拽用
     bool isGrabbing = false;
-    Vector3[] points;
-    public GameObject MarkerPrefab;
-    GameObject[] markerHolder = new GameObject[8];
-    int curPointIndex = 0;
+    Block[] blockHolder = new Block[8];
+    int curBlockIndex = 0;
 
     // Use this for initialization
     void Start () {
-        InitMarkers(GetComponent<MegaFFD>().pt);
+        blockHolder[0] = body;
+        blockHolder[1] = head;
+        blockHolder[2] = lLeg;
+        blockHolder[3] = rLeg;
+        blockHolder[4] = lArm;
+        blockHolder[5] = rArm;
+
     }
-	
-	// Update is called once per frame
-	void Update () {
-        points = GetComponent<MegaFFD>().pt;
 
-        if (!isGrabbing)
+    // Update is called once per frame
+    void Update() {
+               
+        // 鼠标右键选择block
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            UpdatePointIndex();
+            blockHolder[curBlockIndex].EnableMarkers(false);
+            curBlockIndex = GetBlock();
+            
         }
-        
 
-                
-        UpdateMarkers(points);
+        // 显示选中的block的marker
+        blockHolder[curBlockIndex].EnableMarkers(true);
 
-
-
+        // 开启/关闭拖拽模式
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             isGrabbing = true;
@@ -50,108 +58,65 @@ public class Manipulate : MegaFFD
             isGrabbing = false;
         }
 
-        if (isGrabbing)
+        // 不在拖拽模式则尝试选中marker
+        if (!isGrabbing)
         {
-            Drag(curPointIndex);
+            SetMarkerIndex(curBlockIndex);
         }
+        else
+        {
+            // 在拖拽模式进行拖拽
+            var x = Input.GetAxis("Mouse X") * 20 * Time.deltaTime;
+            var y = Input.GetAxis("Mouse Y") * 20 * Time.deltaTime;
+            var z = Input.GetAxis("Mouse ScrollWheel") * 4f;
+
+            x = ca.transform.position.x < 0 ? -x : x;
+            y = ca.transform.position.y < 0 ? -y : y;
+            z = ca.transform.position.z < 0 ? z : -z;
+
+            blockHolder[curBlockIndex].Drag(x, y, z);
+        }
+
     }
 
-    void Drag(int index)
+
+    int GetBlock()
     {
-        var x = Input.GetAxis("Mouse X") * 20 * Time.deltaTime;
-        var y = Input.GetAxis("Mouse Y") * 20 * Time.deltaTime;
-        var z = Input.GetAxis("Mouse ScrollWheel") * 4f;
-
-        x = ca.transform.position.x < 0 ? -x : x;
-        y = ca.transform.position.y < 0 ? -y : y;
-        z = ca.transform.position.z < 0 ? z : -z;
-
-        // 这个方法有bug
-        //     points[index] = ModifyCameraPosition( ca.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, hit.collider.gameObject.transform.position.z)) );
-
-
-        points[index] += new Vector3(x, y, z);
-
-        
-    }
-
-    void UpdatePointIndex()
-    {
-        /*
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        ra = ca.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ra, out hit))
         {
-            curPointIndex = 0;
-        }else if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            curPointIndex = 1;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            curPointIndex = 2;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            curPointIndex = 3;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            curPointIndex = 4;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            curPointIndex = 5;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            curPointIndex = 6;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            curPointIndex = 7;
-        }
-        */
-
-        if (Input.GetMouseButton(0))
-        {
-            ra = ca.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ra, out hit))
+            for (int i = 0; i < blockHolder.Length; i++)
             {
-                for (int i = 0; i < 8; i++)
+                if (hit.collider.gameObject.transform.position - blockHolder[i].transform.position == Vector3.zero)
                 {
-                    if (hit.collider.gameObject.transform.position - points[i] == Vector3.zero)
-                    {
-                        curPointIndex = i;
-                    }
-                   
+                    return i;
                 }
-                
             }
+
         }
 
+        return curBlockIndex;
     }
 
-    void InitMarkers(Vector3[] points)
-    {
-       
-        for (int i = 0; i < 8; i++)
-        {
-            GameObject marker = (GameObject)Instantiate(
-            MarkerPrefab,
-            points[i],new Quaternion(0,0,0,0));
-            marker.transform.position = points[i];
-            markerHolder[i] = marker;
-        }
-    }
+    void  SetMarkerIndex(int blockIndex)
+    {  
 
+        Vector3[] points = blockHolder[blockIndex].GetMarkerPosition();
 
-    void UpdateMarkers(Vector3[] points)
-    {
-        for (int i = 0; i < 8; i++)
+        ra = ca.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ra, out hit))
         {
-            markerHolder[i].transform.position = points[i];
-            markerHolder[i].GetComponent<MeshRenderer>().material.color = Color.red;
-            markerHolder[curPointIndex].GetComponent<MeshRenderer>().material.color = Color.blue;
+            for (int i = 0; i < 8; i++)
+            {
+                if (hit.collider.gameObject.transform.position - points[i] == Vector3.zero)
+                {
+                    blockHolder[blockIndex].SetCurMarkerIndex(i);
+                }
+                   
+            }
+                
         }
+
     }
     
     Vector3 ModifyCameraPosition(Vector3 obj)
