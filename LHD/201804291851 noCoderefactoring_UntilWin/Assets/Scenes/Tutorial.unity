@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 381474731}
   - component: {fileID: 381474730}
   - component: {fileID: 381474733}
+  - component: {fileID: 381474734}
   m_Layer: 0
   m_Name: EnemyCastle
   m_TagString: Untagged
@@ -338,7 +339,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 381474728}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 028908a7b469f46b985279def785c78f, type: 3}
   m_Name: 
@@ -346,6 +347,20 @@ MonoBehaviour:
   blood_red: {fileID: 2800000, guid: 7e6ea9b2c6ce74e76b7a2f5672827fdd, type: 3}
   blood_black: {fileID: 2800000, guid: a5e2393c774d1412bab8df70b0d33b0f, type: 3}
   HP: 100
+--- !u!114 &381474734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 381474728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ee37b4f9a9c8f40a8d2450f2cb796f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blood_red: {fileID: 2800000, guid: 7e6ea9b2c6ce74e76b7a2f5672827fdd, type: 3}
+  blood_black: {fileID: 2800000, guid: a5e2393c774d1412bab8df70b0d33b0f, type: 3}
+  HP: 200
 --- !u!1 &410010147
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,7 +739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e6b4b73d0065cd4e887dbf3f8d07ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WelcomePanel: {fileID: 0}
+  name: 
 --- !u!4 &960361040
 Transform:
   m_ObjectHideFlags: 0
@@ -901,6 +916,14 @@ Prefab:
     - target: {fileID: 1212600918453326, guid: 491faece96d1c6c49b7cccb082fb6af7, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1786119553892678, guid: 491faece96d1c6c49b7cccb082fb6af7, type: 2}
+      propertyPath: m_Name
+      value: NameText
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201580582902928, guid: 491faece96d1c6c49b7cccb082fb6af7, type: 2}
+      propertyPath: m_TagString
+      value: InputField
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 491faece96d1c6c49b7cccb082fb6af7, type: 2}
@@ -1090,11 +1113,26 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1819840269}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 028908a7b469f46b985279def785c78f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blood_red: {fileID: 2800000, guid: 7e6ea9b2c6ce74e76b7a2f5672827fdd, type: 3}
+  blood_black: {fileID: 2800000, guid: a5e2393c774d1412bab8df70b0d33b0f, type: 3}
+  HP: 100
+--- !u!114 &1819840277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1819840269}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12aaa299646b1d74d966d13e5291a16a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 
   blood_red: {fileID: 2800000, guid: 7e6ea9b2c6ce74e76b7a2f5672827fdd, type: 3}
   blood_black: {fileID: 2800000, guid: a5e2393c774d1412bab8df70b0d33b0f, type: 3}
   HP: 100
