@@ -340,7 +340,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 381474728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 028908a7b469f46b985279def785c78f, type: 3}
+  m_Script: {fileID: 11500000, guid: 27ee37b4f9a9c8f40a8d2450f2cb796f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blood_red: {fileID: 2800000, guid: 7e6ea9b2c6ce74e76b7a2f5672827fdd, type: 3}
@@ -724,7 +724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e6b4b73d0065cd4e887dbf3f8d07ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WelcomePanel: {fileID: 0}
+  name: 
 --- !u!4 &960361040
 Transform:
   m_ObjectHideFlags: 0
@@ -749,7 +749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2991b354f8014143a820acac26f5d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pn_Win: {fileID: 0}
+  Pn_Win: {fileID: 211851537}
 --- !u!1001 &965471310
 Prefab:
   m_ObjectHideFlags: 0
@@ -901,6 +901,10 @@ Prefab:
     - target: {fileID: 1212600918453326, guid: 491faece96d1c6c49b7cccb082fb6af7, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201580582902928, guid: 491faece96d1c6c49b7cccb082fb6af7, type: 2}
+      propertyPath: m_TagString
+      value: InputField
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 491faece96d1c6c49b7cccb082fb6af7, type: 2}
@@ -1090,7 +1094,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1819840269}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 028908a7b469f46b985279def785c78f, type: 3}
   m_Name: 
